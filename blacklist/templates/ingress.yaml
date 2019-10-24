@@ -1,0 +1,26 @@
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+  generation: 2
+  name: ingress
+  namespace: blacklist
+spec:
+  rules:
+  - host: apigateway.elensdata.com
+    http:
+      paths:
+      - backend:
+          serviceName: app-svc
+          servicePort: 8080
+        path: /
+status:
+  loadBalancer:
+    ingress:
+    - ip: 192.168.1.253
+    - ip: 192.168.1.49
