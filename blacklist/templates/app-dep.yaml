@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: app-c
-          image: "172.31.15.33:5000/blacklist:v5"
+          image: "172.31.15.33:5000/blacklist:v6"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
