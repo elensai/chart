@@ -6,7 +6,7 @@ metadata:
   name: testlogs-pv
 spec:
   capacity:
-    storage: 2Gi
+    storage: 6Gi
   accessModes:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
@@ -23,6 +23,20 @@ metadata:
   name: testlogs-vol
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logs-claim
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: testlogs-vol
 
 ---
 
