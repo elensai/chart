@@ -24,19 +24,19 @@ metadata:
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: logs-claim
-spec:
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: testlogs-vol
+# ---
+# 
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: logs-claim
+# spec:
+#   accessModes:
+#   - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: testlogs-vol
 
 ---
 
