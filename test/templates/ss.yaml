@@ -79,6 +79,8 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: www
+      annotations:
+      volume.beta.kubernetes.io/storage-class: "testlogs-vol" 
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "testlogs-vol"
