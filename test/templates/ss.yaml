@@ -21,8 +21,8 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: testlogs-vol
-provisioner: kubernetes.io/no-provisioner
-# provisioner:  nfs-provisioner
+# provisioner: kubernetes.io/no-provisioner
+provisioner:  nfs-provisioner
 volumeBindingMode: WaitForFirstConsumer
 
 # ---
@@ -79,8 +79,6 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: www
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "testlogs-vol" 
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "testlogs-vol"
