@@ -11,6 +11,8 @@ metadata:
   name: ingress
   namespace: blacklist
 spec:
+  securityContext:
+    runAsUser: 0
   rules:
   - host: apigateway.elensdata.com
     http:
