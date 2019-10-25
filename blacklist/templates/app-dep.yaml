@@ -28,8 +28,8 @@ spec:
             - name: esconfig
               mountPath: /usr/local/tomcat/webapps/BlackList_saas/WEB-INF/classes/my.properties
               subPath: my.properties
-            - name: logsdb
-              mountPath: '/usr/local/tomcat/logs'
+            # - name: logsdb
+              # mountPath: '/usr/local/tomcat/logs'
 
       
       volumes:
