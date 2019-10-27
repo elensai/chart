@@ -1,0 +1,90 @@
+---
+# Source: test/templates/ss.yaml
+
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: testlogs-pv
+spec:
+  capacity:
+    storage: 6Gi
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: testlogs-vol
+  nfs:
+    path: /nfsdata/test_logs
+    server: 172.31.15.33
+
+---
+
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: testlogs-vol
+# provisioner: kubernetes.io/no-provisioner
+provisioner:  nfs-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+# ---
+# 
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: logs-claim
+# spec:
+#   accessModes:
+#   - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: testlogs-vol
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "nginx"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: docker.io/nginx:stable
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "testlogs-vol"
+      resources:
+        requests:
+          storage: 1Gi
+
