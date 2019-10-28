@@ -71,7 +71,8 @@ subjects:
     namespace: default
 roleRef:
   kind: ClusterRole
-  name: release-name-nfs-client-provisioner-runner
+  name: cluster-admin
+  # name: release-name-nfs-client-provisioner-runner
   apiGroup: rbac.authorization.k8s.io
 
 ---
