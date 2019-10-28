@@ -48,34 +48,34 @@ spec:
 
 ---
 
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: test-nfs-app
-#   labels:
-#     key: app
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app.kubernetes.io/name: app-pod
-#   template:
-#     metadata:
-#       labels:
-#         app.kubernetes.io/name: app-pod
-#     spec:
-#       containers:
-#         - name: app-c
-#           image: "docker.io/nginx:stable"
-#           imagePullPolicy: IfNotPresent
-#           ports:
-#             - name: http
-#               containerPort: 80
-#           volumeMounts:
-#             - name: logsdb
-#               mountPath: '/usr/local/tomcat/logs'
-#       volumes:
-#         - name: logsdb
-#           persistentVolumeClaim:
-#             claimName: logs-claim
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-nfs-app
+  labels:
+    key: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: app-pod
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: app-pod
+    spec:
+      containers:
+        - name: app-c
+          image: "docker.io/nginx:stable"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - name: logsdb
+              mountPath: '/usr/local/tomcat/logs'
+      volumes:
+        - name: logsdb
+          persistentVolumeClaim:
+            claimName: logs-claim
 
