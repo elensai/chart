@@ -21,7 +21,7 @@ spec:
       - backend:
           serviceName: app-svc
           servicePort: 8080
-        path: /blacklist
+        path: /
 # status:
 #   loadBalancer:
 #     ingress:
