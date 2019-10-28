@@ -1,16 +1,4 @@
 
-
-
-# kind: StorageClass
-# apiVersion: storage.k8s.io/v1
-# metadata:
-#   name: testlogs-vol
-# # provisioner: kubernetes.io/no-provisioner
-# provisioner:  cluster.local/release-name-nfs-client-provisioner
-# volumeBindingMode: WaitForFirstConsumer
-
-# ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -23,23 +11,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: nfs-client
-
----
-
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: nginx
-#   labels:
-#     app: nginx
-# spec:
-#   ports:
-#   - port: 80
-#     name: web
-#   clusterIP: None
-#   selector:
-#     app: nginx
+  # storageClassName: nfs-client
 
 # ---
 
@@ -76,34 +48,34 @@ spec:
 
 ---
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: test-nfs-app
-  labels:
-    key: app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: app-pod
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: app-pod
-    spec:
-      containers:
-        - name: app-c
-          image: "docker.io/nginx:stable"
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 80
-          volumeMounts:
-            - name: logsdb
-              mountPath: '/usr/local/tomcat/logs'
-      volumes:
-        - name: logsdb
-          persistentVolumeClaim:
-            claimName: logs-claim
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: test-nfs-app
+#   labels:
+#     key: app
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/name: app-pod
+#   template:
+#     metadata:
+#       labels:
+#         app.kubernetes.io/name: app-pod
+#     spec:
+#       containers:
+#         - name: app-c
+#           image: "docker.io/nginx:stable"
+#           imagePullPolicy: IfNotPresent
+#           ports:
+#             - name: http
+#               containerPort: 80
+#           volumeMounts:
+#             - name: logsdb
+#               mountPath: '/usr/local/tomcat/logs'
+#       volumes:
+#         - name: logsdb
+#           persistentVolumeClaim:
+#             claimName: logs-claim
 
