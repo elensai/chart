@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-svc
+  labels:
+    key: redis-svc
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379 
+      targetPort: http
+      name: http
+      # nodePort: 30050
+  selector:
+    app.kubernetes.io/name: redis-pod
