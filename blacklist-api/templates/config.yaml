@@ -24,7 +24,7 @@ data:
             <!--solr-->
             <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
                 <property name="driverClassName" value="org.postgresql.Driver"/>
-                <property name="url" value="jdbc:postgresql://pg-svc:4432/blacklist_saas?autoReconnect=true&amp;allowMultiQueries=true"/>
+                <property name="url" value="jdbc:postgresql://pg-svc:5432/blacklist_saas?autoReconnect=true&amp;allowMultiQueries=true"/>
                 <property name="username" value="postgres"/>
                 <property name="password" value="black123"/>
 
