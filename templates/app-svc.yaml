@@ -10,5 +10,6 @@ spec:
     - port: 8080
       targetPort: http
       name: http
+      nodePort: 55730
   selector:
     app.kubernetes.io/name: blacklist-pod
