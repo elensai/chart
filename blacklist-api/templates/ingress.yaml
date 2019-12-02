@@ -15,8 +15,8 @@ spec:
   securityContext:
     runAsUser: 0
   rules:
-  # - host: apigateway.elensdata.com
-  - host: apigateway.corp.elensdata.com
+  - host: apigateway.elensdata.com
+  # - host: apigateway.corp.elensdata.com
     http:
       paths:
       - backend:
