@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: pg-c
-          image: "172.31.15.33:5000/postgres:9.4"
+          image: "registry.elensdata.com/elensai/postgres:9.4"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
