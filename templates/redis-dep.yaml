@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: redis-c
-          image: "172.31.15.33:5000/redis:5.0.4"
+          image: "registry.elensdata.com/elensai/redis:5.0.4"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

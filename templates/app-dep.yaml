@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: app-c
-          image: "172.31.15.33:5000/blacklist:v7"
+          image: "registry.elensdata.com/elensai/blacklist:v7"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
