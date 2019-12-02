@@ -7,7 +7,7 @@ data:
   esconfig: |-
     # es.hostName=192.168.1.87
     # es.hostName=118.190.58.150
-    es.hostName=172.31.15.35
+    es.hostName=172.31.15.38
     #es.hostName=10.9.72.21
     es.schema=http
     es.port=9200
