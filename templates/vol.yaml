@@ -11,7 +11,7 @@ spec:
   storageClassName: postgre-vol
   nfs:
     path: /nfsdata/blacklist
-    server: 172.31.15.33
+    server: 172.31.15.36
 
 ---
 
@@ -37,7 +37,7 @@ spec:
   storageClassName: applogs-vol
   nfs:
     path: /nfsdata/blacklist_logs
-    server: 172.31.15.33
+    server: 172.31.15.36
 
 ---
 
