@@ -1,7 +1,7 @@
 volumeclassname: volstorage
 volumepvname: pv
 volumepvpath: /nfsdata/olap/
-volumeserver: 192.168.1.71
+volumeserver: 118.190.58.150
 volumepvspace: 1Gi
 volumename: www-web  # 不能随意修改
 volumenum:
