@@ -22,3 +22,8 @@ spec:
       items:
       - key: initpsh-config
         path: init.sh
+  tolerations:
+  - key: "key"
+    operator: "Equal"
+    value: "test02"
+    effect: "PreferNoSchedule"
