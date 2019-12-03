@@ -47,6 +47,11 @@ spec:
             items:
               - key: olapjdbc-config
                 path: jdbc.properties
+      tolerations:
+        - key: "key"
+          operator: "Equal"
+          value: "test02"
+          effect: "PreferNoSchedule"
 ---
 apiVersion: v1
 kind: Service
