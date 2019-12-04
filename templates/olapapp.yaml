@@ -9,7 +9,7 @@ spec:
   ports:
     - port: 8080
       targetPort: olapapp-port
-      nodePort: 28080
+      nodePort: 38080
   selector:
     app: olapapp-pod
 ---
@@ -64,7 +64,7 @@ spec:
   ports:
     - port: 7070
       targetPort: 7070
-      nodePort: 28081
+      nodePort: 38081
   selector:
     statefulset.kubernetes.io/pod-name: web-0
 
