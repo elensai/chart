@@ -17,4 +17,4 @@ mysqlvolumepvpath: /nfsdata/olap/mysql
 mysqlrootpasswd: 123456
 mysqlvolumespace: 1Gi
 
-olapimage: registry.elensdata.com/elensai/olap2:v1
+olapimage: registry.elensdata.com/elensai/olap2:v3

@@ -17,8 +17,8 @@ data:
     #kylin api
     base.kylin_url=http\://olapkylin-svc:7070/kylin/api
 
-    base.xml_path=/Users/lizhi/Documents/workspace/olapNew/olap/xml/
-    base.image_path=/Users/lizhi/Documents/workspace/olapNew/olap/image/
+    base.xml_path=/user/apps/tomcat/webapps/olap/xml/
+    base.image_path=/user/apps/tomcat/webapps/olap/image/
 
 
 
