@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zhiwen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zhiwen-pod
+  template:
+    metadata:
+      labels:
+        app: zhiwen-pod
+    spec:
+      containers:
+        - name: zhiwen-c
+          image: "registry.elensdata.com/zhiwen/zhiwen-service:v7"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: zhiwen-port
+              containerPort: {{ .Values.SERVICE_PORT }}
+              protocol: TCP
+          command: ["/bin/bash"]
+          args: ["-c", "npm run restartprod && tail -f env-prod.sh"]
+          envFrom:
+            - configMapRef:
+                name: zhiwen-search-env-config
+          volumeMounts:
+            - mountPath: '/var/www/build/zhiwen-service/www/upload/local'
+              name: localdb
+            - mountPath: '/var/www/build/zhiwen-service/www/download'
+              name: downloaddb
+      tolerations:
+        - key: "key"
+          operator: "Equal"
+          value: "gpu"
+          effect: "NoExecute"
+      volumes:
+        - name: localdb
+          persistentVolumeClaim:
+            claimName: zhiwen-claim
+        - name: downloaddb
+          persistentVolumeClaim:
+            claimName: zhiwen-downlaod-claim

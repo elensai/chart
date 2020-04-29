@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zhiwen-mysql-pv
+spec:
+  capacity:
+    storage: {{ .Values.mysqldata }}
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: zhiwen-mysql-voloume
+  nfs:
+    path: "/nfsdata/zhiwen-search/mysql"
+    server: {{ .Values.NFS_SERVICE_HOST }}
+
+---
+
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: zhiwen-mysql-voloume
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zhiwen-mysql-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.mysqldata }}
+  storageClassName: zhiwen-mysql-voloume

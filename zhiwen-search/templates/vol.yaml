@@ -1,0 +1,121 @@
+#zhiwen upload
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: zhiwen-vol
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zhiwen-claim
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.appdata}}
+  storageClassName: zhiwen-vol
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zhiwen-pv
+spec:
+  capacity:
+    storage: {{ .Values.appdata }}
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: zhiwen-vol
+  nfs:
+    path: {{ .Values.NFS_SERVICE_PATH }}
+    server: {{ .Values.NFS_SERVICE_HOST }}
+
+---
+
+#智文download
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: zhiwen-downlaod-vol
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zhiwen-downlaod-claim
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.appdata}}
+  storageClassName: zhiwen-downlaod-vol
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zhiwen-download-pv
+spec:
+  capacity:
+    storage: {{ .Values.appdata }}
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: zhiwen-downlaod-vol
+  nfs:
+    path: {{ .Values.NFS_DOWNLOAD_SERVICE_PATH }}
+    server: {{ .Values.NFS_SERVICE_HOST }}
+
+---
+
+#es
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: zhiwen-search-es-s
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+--- 
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zhiwen-search-es-pv
+spec:
+  capacity:
+    storage:  {{ .Values.esdata }}
+  volumeMode: Filesystem 
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: zhiwen-search-es-s
+  nfs: 
+    path: /nfsdata/zhiwen-search/esdata
+    server: {{ .Values.NFS_SERVICE_HOST }}
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zhiwen-es-c
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.esdata }}
+  storageClassName: zhiwen-search-es-s

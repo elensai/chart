@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: self-mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zhiwen-mysql-pod
+    spec:
+      containers:
+        - name: pod-zhiwen-mysql
+          image: "registry.elensdata.com/elensai/mysql:5.7"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "true"
+          ports:
+            - name: mysql-port
+              containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - mountPath: '/var/lib/mysql'
+              name: mysqldb
+      volumes:
+        - name: mysqldb
+          persistentVolumeClaim:
+            claimName: zhiwen-mysql-claim
+      tolerations:
+        - key: "key"
+          operator: "Equal"
+          value: "gpu"
+          effect: "NoExecute"
+          

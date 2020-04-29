@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zhiwen-search-es
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zhiwen-search-es
+    spec:
+      containers:
+      - name: pod-zhiwen
+        image: "registry.elensdata.com/elensai/es-5.1.1:zhiv7"
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsUser: 1000
+        # command: ["/bin/bash", "-c", "tail -f /etc/hosts"]
+        ports:
+        - name: zhiwen-es-92
+          containerPort: 9200
+        - name: zhiwen-es-93
+          containerPort: 9300
+        volumeMounts:
+        - name: es-yml-config
+          mountPath: /user/apps/es-5.1.1/config/elasticsearch.yml
+          subPath: elasticsearch.yml
+        - name: es-jvm-config
+          mountPath: /user/apps/es-5.1.1/config/jvm.options
+          subPath: jvm.options 
+        - name: es-data
+          mountPath: /user/apps/es-5.1.1/data
+      volumes:
+      - name: es-yml-config
+        configMap:
+          name: zhiwen-es-yml-config
+          items:
+          - key: es-yml-config
+            path: elasticsearch.yml
+      - name: es-jvm-config
+        configMap:
+          name: zhiwen-es-jvm-config
+          items:
+          - key: es-jvm-config
+            path: jvm.options
+      - name: es-data
+        persistentVolumeClaim:
+          claimName: zhiwen-es-c
+
+      tolerations:
+      - key: "key"
+        operator: "Equal"
+        value: "test02"
+        effect: "PreferNoSchedule"

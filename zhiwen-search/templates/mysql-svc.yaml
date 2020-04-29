@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: self-mysql-svc
+  labels:
+    dep: zhiwen-mysql-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      targetPort: mysql-port
+      nodePort: 33666
+      protocol: TCP
+  selector:
+    app: zhiwen-mysql-pod

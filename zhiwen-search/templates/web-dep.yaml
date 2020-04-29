@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-pod
+  template:
+    metadata:
+      labels:
+        app: web-pod
+    spec:
+      containers:
+        - name: web-c
+          image: "registry.elensdata.com/zhiwen/zhiwen-web:v19"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: web-port
+              containerPort: 8370
+              protocol: TCP
+          volumeMounts:
+            - name: web-config
+              mountPath: /var/www/build/zhiwen-web/config.js
+              subPath: config.js
+            # - name: gzip-config
+            #   mountPath: /etc/nginx/nginx.conf
+            #   subPath: nginx.conf
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/zhiwen.conf
+              subPath: zhiwen.conf
+      tolerations:
+        - key: "key"
+          operator: "Equal"
+          value: "gpu"
+          effect: "NoExecute"
+      volumes:
+        - name: web-config
+          configMap:
+            name: web-env-config
+            items:
+              - key: config
+                path: config.js
+        # - name: gzip-config
+        #   configMap:
+        #     name: nginx-gzip-config
+        #     items:
+        #       - key: config
+        #         path: gzip.conf
+        - name: nginx-config
+          configMap:
+            name: nginx-env-config
+            items:
+              - key: config
+                path: zhiwen.conf
