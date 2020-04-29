@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: classify-svc
+  labels:
+    dep: classify-svc
+spec:
+  type: NodePort
+  ports:
+    - name: classify-9301
+      port: 9301
+      targetPort: python-port
+      nodePort: 9301
+      protocol: TCP
+  selector:
+    app: classify-pod

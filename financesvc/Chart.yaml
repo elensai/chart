@@ -1,0 +1,5 @@
+apiVersion: v1
+appVersion: "1.0"
+description: "上海金融抽取服务"
+name: "financesvc"
+version: 1.0.12

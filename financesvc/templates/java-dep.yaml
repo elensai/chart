@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-pod
+  template:
+    metadata:
+      labels:
+        app: java-pod
+    spec:
+      containers:
+        - name: java-c
+          image: "{{ .Values.JAVA_IMAGES}}"
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash"]
+          args: ["-c", "source /etc/profile && cd /root/tomcat/webapps/apm_finance_server && java -server -jar apm-finance-server.jar --spring.profiles.active=prod"]
+          ports:
+            - name: java-port
+              containerPort: 8300
+              protocol: TCP
+          volumeMounts:
+            - name: prod-config
+              mountPath: '/root/tomcat/webapps/apm_finance_server/config/application-prod.yml'
+              subPath: application-prod.yml
+      volumes:
+        - name: prod-config
+          configMap:
+            name: prod-config-map
+            items:
+              - key: config
+                path: application-prod.yml

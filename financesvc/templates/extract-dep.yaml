@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: extract
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: extract-pod
+  template:
+    metadata:
+      labels:
+        app: extract-pod
+    spec:
+      containers:
+        - name: extract-c
+          image: "{{ .Values.PYTHON_IMAGES}}"
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash"]
+          args: ["-c", "source /root/.bashrc && cd /root/finance-svc/apm-finance-extract-model/extract_model/extract_app && python server.py"]
+          ports:
+            - name: extract-port2
+              containerPort: 9302
+              protocol: TCP

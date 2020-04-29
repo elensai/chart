@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: classify-pod
+  template:
+    metadata:
+      labels:
+        app: classify-pod
+    spec:
+      containers:
+        - name: classify-c
+          image: "{{ .Values.PYTHON_IMAGES}}"
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash"]
+          args: ["-c", "source /root/.bashrc && cd /root/finance-svc/apm-finance-classify-model/classify_model/classify_app && python server.py"]
+          ports:
+            - name: classify-port
+              containerPort: 9301
+              protocol: TCP

@@ -1,0 +1,2 @@
+OCR_IMAGES: "registry.elensdata.com/ocr/zhiwen_ocr:v1.0"
+NFS_SERVICE_HOST: "192.168.1.163"

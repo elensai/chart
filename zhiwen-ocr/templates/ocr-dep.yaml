@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zhiwen-ocr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zhiwen-ocr-pod
+  template:
+    metadata:
+      labels:
+        app: zhiwen-ocr-pod
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: host28
+      containers:
+        - name: zhiwen-ocr-c
+          image: "{{ .Values.OCR_IMAGES}}"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PYTHONIOENCODING
+              value: "utf-8"
+          command: ["/bin/bash"]
+          args: ["-c", "python /home/images/chenm/ocr_service/manage.py runserver 0.0.0.0:8000"]
+          ports:
+            - name: zhiwen-ocr-port
+              containerPort: 8000
+              protocol: TCP
+          volumeMounts:
+            - name: ocr-config
+              mountPath: '/home/images/chenm/ocr_service'
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+      volumes:
+        - name: ocr-config
+          persistentVolumeClaim:
+            claimName: ocr-claim

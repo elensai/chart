@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prod-config-map
+  namespace: financesvc
+data:
+  config: |-
+    spring:
+      application:
+        name: apm-aidoc
+      config:
+        location: /root/tomcat/webapps/apm_finance_serverconfig/
+      jmx:
+        enabled: false
+
+    logging:
+      config: /root/tomcat/webapps/apm_finance_server/config/log4j2.xml
+
+    server:
+      port: 8300
+
+    ai:
+      service:
+        classify: http://classify-svc:9301/billtype
+        extract:
+          bill: http://extract-svc:9302/extractor
+        ocr:
+          html: http://192.168.1.147:8285/upload

@@ -1,0 +1,38 @@
+#ocr
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: zhiwen-ocr-vol
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ocr-claim
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: "2Gi"
+  storageClassName: zhiwen-ocr-vol
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zhiwen-ocr-pv
+spec:
+  capacity:
+    storage: "2Gi"
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: zhiwen-ocr-vol
+  nfs:
+    path: "/nfsdata/zhiwen-ocr/ocr_service"
+    server: {{ .Values.NFS_SERVICE_HOST }}

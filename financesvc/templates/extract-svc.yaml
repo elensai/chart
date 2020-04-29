@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: extract-svc
+  labels:
+    dep: extract-svc
+spec:
+  type: NodePort
+  ports:
+    - name: extract-9302
+      port: 9302
+      targetPort: extract-port2
+      nodePort: 9302
+      protocol: TCP
+  selector:
+    app: extract-pod

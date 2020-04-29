@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zhiwen-ocr-svc
+  labels:
+    dep: zhiwen-ocr-svc
+spec:
+  type: NodePort
+  ports:
+    - name: zhiwen-ocr-8000
+      port: 18285
+      targetPort: zhiwen-ocr-port
+      nodePort: 18285
+      protocol: TCP
+  selector:
+    app: zhiwen-ocr-pod

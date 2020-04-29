@@ -1,0 +1,2 @@
+PYTHON_IMAGES: "registry.elensdata.com/financesvc/financesvc-extract-classify:0.1.1"
+JAVA_IMAGES: "registry.elensdata.com/financesvc/javaapi:0.1.0"
